@@ -163,17 +163,10 @@ namespace GraphicsLab4
             return t1 && t2;
         }
 
-        private Point crossPoint(Point p1, Point l1, Point l2)
+        private Point crossPoint(Point l1, Point l2)
         {
-            var lx = l2.X - l1.X;
-            var ly = l2.Y - l1.Y;
-            var dx = l1.X - p1.X;
-            var dy = l1.Y - p1.Y;
-
-            var t = -(dx * lx + dy * ly) / (lx * lx + ly * ly);
-            var XX = l1.X + t * lx;
-            var YY = l1.Y + t * ly;
-
+            int XX = (l1.X + l2.X) / 2;
+            int YY = (l1.Y + l2.Y) / 2;
             return new Point(XX, YY);
         }
 
@@ -184,32 +177,36 @@ namespace GraphicsLab4
             var minPoint = new Point();
             var cnt = 0;
             double dist;
+            int pC = 0;
             var pnt = new Point();
             for (int i = 0; i < polygon.corners.Count - 1; i++) {
-                pnt = crossPoint(point, polygon.corners[i], polygon.corners[i + 1]);
-                dist = Math.Sqrt((point.X - pnt.X) ^ 2 + (point.Y - pnt.Y) ^ 2);
+                pnt = crossPoint(polygon.corners[i], polygon.corners[i + 1]);
+                dist = Math.Sqrt((point.X - pnt.X) * (point.X - pnt.X) + (point.Y - pnt.Y) * (point.Y - pnt.Y));
                 if(dist < minDist)
                 {
                     minDist = dist;
                     minPoint = pnt;
+                    pC = i;
                 }
                 cnt += isCrossed(line, point,  polygon.corners[i], polygon.corners[i+1]) ? 1 : 0 ;
             }
             cnt += isCrossed(line, point, polygon.corners.First(), polygon.corners.Last()) ? 1 : 0;
-            pnt = crossPoint(point, polygon.corners.Last(), polygon.corners.First());
-            dist = Math.Sqrt((point.X - pnt.X) ^ 2 + (point.Y - pnt.Y) ^ 2);
+            pnt = crossPoint(polygon.corners.Last(), polygon.corners.First());
+            dist = Math.Sqrt((point.X - pnt.X) * (point.X - pnt.X) + (point.Y - pnt.Y) * (point.Y - pnt.Y));
+            String leftOrRight = "";
             if (dist < minDist)
             {
                 minDist = dist;
                 minPoint = pnt;
-            }
+                pC = polygon.corners.Count - 1;
+                leftOrRight = (polygon.corners[0].X - polygon.corners[pC].X) * (point.Y - polygon.corners[pC].Y) - (polygon.corners[0].Y - polygon.corners[pC].Y) * (point.X - polygon.corners[pC].X) < 0
+                ? "and right"
+                : "and left";
+            }else
+                leftOrRight = (polygon.corners[pC + 1].X - polygon.corners[pC].X) * (point.Y - polygon.corners[pC].Y) - (polygon.corners[pC + 1].Y - polygon.corners[pC].Y) * (point.X - polygon.corners[pC].X) < 0
+                    ? "and right"
+                    : "and left";
             var position = cnt % 2 == 0 ? "Outside " : "Inside ";
-            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
-            {
-                g.DrawLine(redPen, minPoint, point);
-            }
-            pictureBox1.Invalidate();
-            var leftOrRight =  minPoint.X * point.Y - minPoint.Y * minPoint.X < 0 ? "and right" : "and left";
             pointPolygonInfo.Text = position + leftOrRight;
         }
     }
