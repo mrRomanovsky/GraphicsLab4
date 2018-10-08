@@ -35,6 +35,7 @@
             this.clearButton = new System.Windows.Forms.Button();
             this.angleCount = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.PointPolygon = new System.Windows.Forms.Button();
             this.pointPolygonInfo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -74,7 +75,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(9, 41);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(604, 327);
+            this.pictureBox1.Size = new System.Drawing.Size(604, 397);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -82,9 +83,9 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(656, 346);
+            this.clearButton.Location = new System.Drawing.Point(656, 409);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(91, 83);
+            this.clearButton.Size = new System.Drawing.Size(91, 29);
             this.clearButton.TabIndex = 5;
             this.clearButton.Text = "Очистить";
             this.clearButton.UseVisualStyleBackColor = true;
@@ -92,7 +93,7 @@
             // 
             // angleCount
             // 
-            this.angleCount.Location = new System.Drawing.Point(656, 153);
+            this.angleCount.Location = new System.Drawing.Point(647, 62);
             this.angleCount.Name = "angleCount";
             this.angleCount.Size = new System.Drawing.Size(100, 20);
             this.angleCount.TabIndex = 6;
@@ -102,12 +103,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(660, 127);
+            this.label1.Location = new System.Drawing.Point(648, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "количество углов";
             // 
+            // listBox1
+            // 
+            this.listBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "Задание 3",
+            "Задание 4",
+            "Задание 5",
+            "Задание 6",
+            "Задание 7",
+            "Задание 8",
+            "Задание 9"});
+            this.listBox1.Location = new System.Drawing.Point(642, 100);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.TabIndex = 8;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // PointPolygon
             // 
             this.PointPolygon.Location = new System.Drawing.Point(146, 415);
@@ -130,6 +148,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.pointPolygonInfo);
             this.Controls.Add(this.PointPolygon);
             this.Controls.Add(this.label1);
@@ -156,6 +175,7 @@
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.TextBox angleCount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button PointPolygon;
         private System.Windows.Forms.TextBox pointPolygonInfo;
     }
