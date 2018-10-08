@@ -36,6 +36,8 @@
             this.angleCount = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.PointPolygon = new System.Windows.Forms.Button();
+            this.pointPolygonInfo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,6 +126,22 @@
             this.listBox1.Size = new System.Drawing.Size(120, 95);
             this.listBox1.TabIndex = 8;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // PointPolygon
+            // 
+            this.PointPolygon.Location = new System.Drawing.Point(146, 415);
+            this.PointPolygon.Name = "PointPolygon";
+            this.PointPolygon.Size = new System.Drawing.Size(275, 23);
+            this.PointPolygon.TabIndex = 9;
+            this.PointPolygon.Text = "Точка относительно многоугольника";
+            this.PointPolygon.UseVisualStyleBackColor = true;
+            this.PointPolygon.Click += new System.EventHandler(this.PointPolygon_Click);
+            // 
+            // pointPolygonInfo
+            // 
+            this.pointPolygonInfo.Location = new System.Drawing.Point(146, 389);
+            this.pointPolygonInfo.Name = "pointPolygonInfo";
+            this.pointPolygonInfo.Size = new System.Drawing.Size(275, 20);
+            this.pointPolygonInfo.TabIndex = 10;
             // 
             // Form1
             // 
@@ -131,6 +149,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.pointPolygonInfo);
+            this.Controls.Add(this.PointPolygon);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.angleCount);
             this.Controls.Add(this.clearButton);
@@ -156,6 +176,8 @@
         private System.Windows.Forms.TextBox angleCount;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button PointPolygon;
+        private System.Windows.Forms.TextBox pointPolygonInfo;
     }
 }
 
