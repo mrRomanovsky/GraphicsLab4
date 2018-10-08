@@ -18,12 +18,14 @@ namespace GraphicsLab4
 
         private Point point = new Point(-1,-1);
         private Segment segment;
+        private Segment segment2;
         private Polygon polygon;
         private int polygonAngles;
         private int anglesRead = 0;
         private Pen redPen = new Pen(Color.Red);
         const float EPS = 1E-9f;
         private FigType figType;
+        private bool seg1Completed;
 
         public Form1()
         {
@@ -62,6 +64,7 @@ namespace GraphicsLab4
             mode = "segment";
             figType = FigType.Segment;
             segment = new Segment();
+            segment2 = new Segment();
         }
 
         private void polygonButton_Click(object sender, EventArgs e)
@@ -126,15 +129,62 @@ namespace GraphicsLab4
                     point.Y = e.Location.Y;
                     break;
                 case FigType.Segment:
-                    if (segment.initialized)
+                    if (mode == "crossRibs")
                     {
-                        segment.end = e.Location;
-                        DrawSegment(segment, redPen);
+                        if (seg1Completed)
+                        {
+                            if (segment2.initialized)
+                            {
+                                segment2.end = e.Location;
+                                DrawSegment(segment2, redPen);
+                                pictureBox1.Invalidate();
+                                PointF intersection = new PointF();
+                                PointF endIntersection = new PointF();
+                                bool intersect = Segment.intersect(segment.start, segment.end, segment2.start,
+                                    segment2.end,
+                                    ref intersection, ref endIntersection);
+                                if (!intersect)
+                                {
+                                    intersection.X = -1;
+                                    intersection.Y = -1;
+                                }
+
+                                var intersectWindow = new SegmentsIntersection(segment, segment2, intersection);
+                                intersectWindow.ShowDialog();
+                            }
+                            else
+                            {
+                                segment2.start = e.Location;
+                                segment2.initialized = true;
+                            }
+                        }
+                        else
+                        {
+                            if (segment.initialized)
+                            {
+                                segment.end = e.Location;
+                                seg1Completed = true;
+                                DrawSegment(segment, redPen);
+                            }
+                            else
+                            {
+                                segment.start = e.Location;
+                                segment.initialized = true;
+                            }
+                        }
                     }
                     else
                     {
-                        segment.start = e.Location;
-                        segment.initialized = true;
+                        if (segment.initialized)
+                        {
+                            segment.end = e.Location;
+                            DrawSegment(segment, redPen);
+                        }
+                        else
+                        {
+                            segment.start = e.Location;
+                            segment.initialized = true;
+                        }
                     }
                     break;
                 case FigType.Polygon:
@@ -174,8 +224,12 @@ namespace GraphicsLab4
                 item.Enabled = false;
                 item.Visible = false;
             }
-            tasksPanels[((ListBox)sender).SelectedIndex].Enabled = true;
-            tasksPanels[((ListBox)sender).SelectedIndex].Visible = true;
+
+            if (((ListBox) sender).SelectedIndex <= 2)
+            {
+                tasksPanels[((ListBox)sender).SelectedIndex].Enabled = true;
+                tasksPanels[((ListBox)sender).SelectedIndex].Visible = true;
+            }
             if (((ListBox)sender).SelectedIndex == 1)
             {
                 mode = "90turn";
@@ -184,6 +238,10 @@ namespace GraphicsLab4
             {
                 mode = "aroundPoint";
                 tasksPanels[2].Controls.Find("task5LabelDirection", false).First().Text = "Выберите точку..."; 
+            }
+            if (((ListBox)sender).SelectedIndex == 3)
+            {
+                mode = "crossRibs";
             }
         }
       
